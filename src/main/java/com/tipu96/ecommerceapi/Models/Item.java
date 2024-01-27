@@ -32,7 +32,16 @@ public class Item {
         this.specifications = specifications;
     }
 
-    public Item() {
+    public Item(){
+        this.name="";
+        this.description="";
+        this.company="";
+        this.category="";
+        this.price=100;
+        this.discount=0;
+        this.inventory=0;
+        this.imageUrl="";
+        this.specifications="";
     }
 
     public String getId() {
