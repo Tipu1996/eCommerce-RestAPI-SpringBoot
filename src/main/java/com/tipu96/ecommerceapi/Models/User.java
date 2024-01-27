@@ -11,30 +11,27 @@ public class User {
     @Id
     private String id;
     @DBRef
-    private String shoppingCartReference;
+    private ShoppingCart shoppingCart;
     @DBRef
-    private String completedOrderReference;
+    private CompletedOrder completedOrder;
     private String name;
     private String email;
     private String password;
-    private String isAdmin;
+    private boolean isAdmin;
     private Address address;
 
     public User() {
-        this.id="";
-        this.shoppingCartReference="";
-        this.completedOrderReference="";
         this.name="";
         this.email="";
         this.password="";
-        this.isAdmin="";
+        this.isAdmin=false;
         this.address=new Address();
     }
 
-    public User(String id, String shoppingCartReference, String completedOrderReference, String name, String email, String password, String isAdmin, Address address) {
+    public User(String id, ShoppingCart shoppingCart, CompletedOrder completedOrder, String name, String email, String password, boolean isAdmin, Address address) {
         this.id = id;
-        this.shoppingCartReference = shoppingCartReference;
-        this.completedOrderReference = completedOrderReference;
+        this.shoppingCart = shoppingCart;
+        this.completedOrder = completedOrder;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -50,20 +47,20 @@ public class User {
         this.id = id;
     }
 
-    public String getShoppingCartReference() {
-        return shoppingCartReference;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public void setShoppingCartReference(String shoppingCartReference) {
-        this.shoppingCartReference = shoppingCartReference;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
-    public String getCompletedOrderReference() {
-        return completedOrderReference;
+    public CompletedOrder getCompletedOrder() {
+        return completedOrder;
     }
 
-    public void setCompletedOrderReference(String completedOrderReference) {
-        this.completedOrderReference = completedOrderReference;
+    public void setCompletedOrder(CompletedOrder completedOrder) {
+        this.completedOrder = completedOrder;
     }
 
     public String getName() {
@@ -90,12 +87,12 @@ public class User {
         this.password = password;
     }
 
-    public String getIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(String isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public Address getAddress() {
@@ -111,24 +108,24 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(shoppingCartReference, user.shoppingCartReference) && Objects.equals(completedOrderReference, user.completedOrderReference) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(isAdmin, user.isAdmin) && Objects.equals(address, user.address);
+        return isAdmin == user.isAdmin && Objects.equals(id, user.id) && Objects.equals(shoppingCart, user.shoppingCart) && Objects.equals(completedOrder, user.completedOrder) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(address, user.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, shoppingCartReference, completedOrderReference, name, email, password, isAdmin, address);
+        return Objects.hash(id, shoppingCart, completedOrder, name, email, password, isAdmin, address);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", shoppingCartReference='" + shoppingCartReference + '\'' +
-                ", completedOrderReference='" + completedOrderReference + '\'' +
+                ", shoppingCart=" + shoppingCart +
+                ", completedOrder=" + completedOrder +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", isAdmin='" + isAdmin + '\'' +
+                ", isAdmin=" + isAdmin +
                 ", address=" + address +
                 '}';
     }

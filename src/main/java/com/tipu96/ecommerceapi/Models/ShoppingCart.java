@@ -20,7 +20,6 @@ public class ShoppingCart {
     }
 
     public ShoppingCart() {
-        this.id="";
         this.items=new ArrayList<>();
     }
 

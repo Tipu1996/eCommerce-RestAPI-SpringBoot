@@ -20,6 +20,7 @@ public class CompletedOrder {
     }
 
     public CompletedOrder() {
+        this.items=new ArrayList<>();
     }
 
     public String getId() {
