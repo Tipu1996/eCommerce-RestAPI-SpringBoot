@@ -25,8 +25,13 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(HttpMethod.POST,"/api/v1/users/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/users").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/users/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/users/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/items/id").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/items/id").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/items").authenticated()
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(withDefaults());
 
@@ -34,3 +39,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+//                        .requestMatchers(HttpMethod.GET,"").authenticated()

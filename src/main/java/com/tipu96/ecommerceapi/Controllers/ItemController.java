@@ -2,9 +2,11 @@ package com.tipu96.ecommerceapi.Controllers;
 
 import com.tipu96.ecommerceapi.Models.Item;
 import com.tipu96.ecommerceapi.Repositories.ItemRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,12 +37,16 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
+    @SecurityRequirement(name="Bearer Authentication")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<String> AddItem(@RequestBody Item item){
         Item createdItem = itemRepository.insert(item);
         return ResponseEntity.created(null).body("Item Added to DB with ID: "+ createdItem.getId());
     }
 
+    @SecurityRequirement(name="Bearer Authentication")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> DeleteItem(@PathVariable String id){
         Optional<Item> item = itemRepository.findById(id);
@@ -51,6 +57,8 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item with ID "+id+" does not exist");
     }
 
+    @SecurityRequirement(name="Bearer Authentication")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<String> UpdateItem(@RequestBody Item item, @PathVariable String id){
         Optional<Item> retrievedItem= itemRepository.findById(id);

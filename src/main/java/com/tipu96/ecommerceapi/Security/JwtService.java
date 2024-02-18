@@ -25,6 +25,7 @@ public class JwtService {
         JwtBuilder builder = Jwts.builder()
                 .setSubject(user.getEmail())
                 .claim("isAdmin", user.isAdmin())
+                .claim("userId", user.getId())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS256, new SecretKeySpec(secretKey.getBytes(), ALGORITHM.getJcaName()));
@@ -50,9 +51,15 @@ public class JwtService {
         Jws<Claims> claimsJws = Jwts.parser()
                 .setSigningKey(new SecretKeySpec(secretKey.getBytes(), ALGORITHM.getJcaName()))
                 .parseClaimsJws(token);
-        System.out.println("Get role");
         Claims claims = claimsJws.getBody();
-        System.out.println(claims.get("isAdmin"));
         return claims.get("isAdmin", Boolean.class) ? "ROLE_ADMIN" : "ROLE_USER";
+    }
+
+    public String getUserIdFromToken(String token) {
+        Jws<Claims> claimsJws = Jwts.parser()
+                .setSigningKey(new SecretKeySpec(secretKey.getBytes(), ALGORITHM.getJcaName()))
+                .parseClaimsJws(token);
+        Claims claims = claimsJws.getBody();
+        return (String) claims.get("userId");
     }
 }
